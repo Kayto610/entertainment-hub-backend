@@ -7,6 +7,7 @@ import contentRoutes from './routes/contentRoutes.js';
 
 dotenv.config();
 
+// Koneksi ke MongoDB Atlas
 connectDB();
 
 const app = express();
@@ -24,6 +25,12 @@ app.get('/', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+// Export instance app untuk handler serverless Vercel
+export default app;
